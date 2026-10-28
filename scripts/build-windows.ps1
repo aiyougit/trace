@@ -5,11 +5,15 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 Set-Location (Join-Path $PSScriptRoot '..')
-$Version = '0.1.0'
+[xml]$Compatibility = Get-Content -Raw 'windows/Compatibility.props'
+$Version = [string]$Compatibility.Project.PropertyGroup.TraceWindowsVersion
+$MinimumWindowsVersion = [string]$Compatibility.Project.PropertyGroup.TraceMinimumWindowsVersion
+if ($Version -notmatch '^\d+\.\d+\.\d+$' -or $MinimumWindowsVersion -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid Windows compatibility metadata' }
 $Architecture = if ($Runtime -eq 'win-arm64') { 'arm64' } else { 'x64' }
 $Output = Join-Path (Get-Location) "dist/windows/$Runtime"
 $Publish = Join-Path $Output 'app'
 if (-not $SkipChecks) {
+    & "$PSScriptRoot/test-windows-compatibility.ps1"
     dotnet run --project windows/Trace.CoreChecks -c Release
     if ($LASTEXITCODE -ne 0) { throw 'Core checks failed' }
 }
@@ -21,7 +25,7 @@ if (-not $SkipInstaller) {
     $Compiler = Get-Command ISCC.exe -ErrorAction SilentlyContinue
     $CompilerPath = if ($Compiler) { $Compiler.Source } else { "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" }
     if (-not (Test-Path $CompilerPath)) { throw 'Install Inno Setup 6.4+ from https://jrsoftware.org/isinfo.php or use -SkipInstaller for the portable build.' }
-    & $CompilerPath "/DTraceVersion=$Version" "/DTraceArchitecture=$Architecture" "/DTraceSource=$Publish" "/DTraceOutput=$Output" windows/Installer/Trace.iss
+    & $CompilerPath "/DTraceVersion=$Version" "/DTraceMinimumWindowsVersion=$MinimumWindowsVersion" "/DTraceArchitecture=$Architecture" "/DTraceSource=$Publish" "/DTraceOutput=$Output" windows/Installer/Trace.iss
     if ($LASTEXITCODE -ne 0) { throw 'Windows installer build failed' }
 }
 $Checksums = @()

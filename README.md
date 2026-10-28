@@ -12,7 +12,7 @@
 ![Universal](https://img.shields.io/badge/架构-Apple%20Silicon%20%2B%20Intel-8A9464)
 [![MIT License](https://img.shields.io/badge/License-MIT-C4A16B)](LICENSE)
 
-[macOS 下载](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0) · [Windows 下载](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.0) · [macOS 指南](docs/使用指南.md) · [Windows 指南](windows/README.md) · [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md)
+[macOS 下载](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0) · [Windows 下载](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.1) · [macOS 指南](docs/使用指南.md) · [Windows 指南](windows/README.md) · [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md)
 
 <img src="docs/images/overview-light.png" alt="迹 Trace 淡木主题概览面板，展示鼠标距离、键盘输入次数与小时活动" width="960">
 
@@ -74,7 +74,7 @@ macOS 使用 SwiftUI、AppKit、CoreGraphics、Accessibility 与 NaturalLanguage
 | 平台 | 系统要求 | 架构 | 下载 |
 | --- | --- | --- | --- |
 | macOS 0.3.0 | macOS 13+ | Apple Silicon / Intel 通用 | [PKG / APP ZIP](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0) |
-| Windows 0.1.0 | Windows 10 22H2 / Windows 11 | x64 / ARM64 分别下载 | [EXE 安装器 / 便携 ZIP](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.0) |
+| Windows 0.1.1 | Windows 10 1809+ / Windows 11；Server 2019+ 桌面体验版（x64） | x64 / ARM64 分别下载 | [EXE 安装器 / 便携 ZIP](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.1) |
 
 ### macOS
 
@@ -99,7 +99,7 @@ shasum -a 256 -c SHA256SUMS.txt
 
 ### Windows
 
-常见 Intel / AMD 电脑选择 `Trace-0.1.0-windows-x64-setup.exe`，ARM 电脑选择 `Trace-0.1.0-windows-arm64-setup.exe`。也提供对应架构的便携 ZIP，解压后运行 `Trace.exe`。安装器按当前用户安装，不需要单独安装 .NET、不设置开机启动；更新及卸载不会主动删除统计。
+常见 Intel / AMD 电脑选择 `Trace-0.1.1-windows-x64-setup.exe`，ARM 电脑选择 `Trace-0.1.1-windows-arm64-setup.exe`。也提供对应架构的便携 ZIP，解压后运行 `Trace.exe`。安装器按当前用户安装，不需要单独安装 .NET、不设置开机启动；更新及卸载不会主动删除统计。
 
 首次运行即可开始基础统计，词语画像默认关闭。主面板收起后保留任务栏入口，也可通过托盘双击展开。Windows 不使用下面的 macOS 权限页；普通用户权限无法读取的窗口和安全桌面会跳过。
 

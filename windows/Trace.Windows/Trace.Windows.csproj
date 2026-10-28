@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Compatibility.props" />
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
-    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <TargetFramework>net10.0-windows$(TraceMinimumWindowsVersion).0</TargetFramework>
+    <SupportedOSPlatformVersion>$(TraceMinimumWindowsVersion).0</SupportedOSPlatformVersion>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
@@ -10,7 +11,7 @@
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <AssemblyName>Trace</AssemblyName>
     <RootNamespace>Trace.Windows</RootNamespace>
-    <Version>0.1.0</Version>
+    <Version>$(TraceWindowsVersion)</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets/Trace.ico</ApplicationIcon>
     <PublishTrimmed>false</PublishTrimmed>

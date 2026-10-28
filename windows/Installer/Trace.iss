@@ -1,5 +1,8 @@
 ﻿#ifndef TraceVersion
-  #define TraceVersion "0.1.0"
+  #define TraceVersion "0.1.1"
+#endif
+#ifndef TraceMinimumWindowsVersion
+  #error TraceMinimumWindowsVersion must be provided from windows/Compatibility.props by build-windows.ps1
 #endif
 #ifndef TraceArchitecture
   #define TraceArchitecture "x64"
@@ -22,7 +25,7 @@ DefaultDirName={localappdata}\Programs\Trace
 DefaultGroupName=迹 · Trace
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
-MinVersion=10.0.19045
+MinVersion={#TraceMinimumWindowsVersion}
 #if TraceArchitecture == "arm64"
 ArchitecturesAllowed=arm64
 ArchitecturesInstallIn64BitMode=arm64

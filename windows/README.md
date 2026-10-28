@@ -1,6 +1,6 @@
 # 迹 · Trace for Windows
 
-原生 WPF 版本，支持 **Windows 10 22H2（19045）/ Windows 11**，提供 x64 与 ARM64 构建。旧的 32 位 Windows 不支持。与 macOS 使用相同的产品设计，各平台分别使用系统原生界面与输入接口。
+原生 WPF 版本，支持 **Windows 10 1809（17763）及以上 / Windows 11 / Windows Server 2019 及以上（桌面体验版）**，提供 x64 与 ARM64 构建。旧的 32 位 Windows 不支持。与 macOS 使用相同的产品设计，各平台分别使用系统原生界面与输入接口。
 
 ## 界面预览
 
@@ -16,12 +16,18 @@
 | --- | --- |
 | <img src="../docs/images/floating-windows-light.png" width="220" alt="淡木悬浮条"> | <img src="../docs/images/floating-windows-dark.png" width="220" alt="夜色悬浮条"> |
 
+## 0.1.1 兼容性修复
+
+旧版 0.1.0 的安装器将最低内部版本限制为 19045，应用 SDK 目标也高于 Server 2019，因而会拒绝 1809 / 17763 系统。0.1.1 将应用和安装器统一到 `10.0.17763` 基线，增加针对 `17763.3532` 的配置回归检查。
+
+Server 2019 请下载 **x64** 安装包。仅支持具有桌面体验的交互式会话，不支持无桌面的 Server Core / Nano Server，也不跨会话统计其他用户的输入。Server 2019 真机运行结果仍需实际设备确认；云端检查覆盖配置基线、构建、启动、窗口和安装流程。
+
 ## 下载与安装
 
-从 [Windows 版本发布页](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.0) 下载：
+从 [Windows 版本发布页](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.1) 下载：
 
-- 普通 Intel / AMD 电脑：`Trace-0.1.0-windows-x64-setup.exe`。
-- Snapdragon 等 ARM 电脑：`Trace-0.1.0-windows-arm64-setup.exe`。
+- 普通 Intel / AMD 电脑：`Trace-0.1.1-windows-x64-setup.exe`。
+- Snapdragon 等 ARM 电脑：`Trace-0.1.1-windows-arm64-setup.exe`。
 - 无需安装器：选择对应架构的 `portable.zip`，解压后运行 `Trace.exe`。
 
 安装器按当前用户安装到 `%LOCALAPPDATA%\Programs\Trace`，提供开始菜单入口和卸载项，桌面快捷方式可选。程序自带 .NET 运行时，不需要另装 .NET；不安装服务、不设置开机启动。首次启动即开始本地基础统计，可在托盘菜单暂停或退出。词语画像默认关闭。
@@ -83,7 +89,9 @@ dotnet run --project windows/Trace.CoreChecks -c Release
 ```powershell
 # 独立演示数据、两种主题的界面渲染，不启动任何输入监听：
 dotnet run --project windows/Trace.Windows -c Release -- --render-previews dist/windows-previews
-Get-FileHash ./Trace-0.1.0-windows-x64-setup.exe -Algorithm SHA256
+Get-FileHash ./Trace-0.1.1-windows-x64-setup.exe -Algorithm SHA256
 ```
 
-GitHub Actions 在 Windows 上执行核心检查、WPF 视图 / 主题渲染、已打包程序的原生监听接口、本地分词及应用启动 / 窗口模式检查、自带运行时发布以及 x64 安装 / 卸载检查。真实输入设备、中文输入法、不同应用的 UIA 兼容性和 ARM64 运行行为需在相应机器上体验验证。
+最低系统版本和 Windows 版本号集中在 `windows/Compatibility.props`，构建脚本据此生成安装器限制；`scripts/test-windows-compatibility.ps1` 检查应用目标和安装器保持一致。
+
+GitHub Actions 在 Windows 上执行系统版本基线回归、核心检查、WPF 视图 / 主题渲染、已打包程序的原生监听接口、本地分词及应用启动 / 窗口模式检查、自带运行时发布以及 x64 安装 / 卸载检查。真实输入设备、中文输入法、不同应用的 UIA 兼容性和 ARM64 运行行为需在相应机器上体验验证。
