@@ -40,6 +40,13 @@ jobs:
             throw 'WPF preview failed'
           }
           Get-Content dist/windows-previews/smoke-checks.txt
+      - name: Native API checks before packaging
+        if: matrix.runtime == 'win-x64'
+        run: |
+          $Report = Join-Path $env:RUNNER_TEMP 'TraceNativeDevelopmentChecks.txt'
+          dotnet run --project windows/Trace.Windows -c Release -- --check-native "$Report"
+          Get-Content $Report -ErrorAction SilentlyContinue
+          if ($LASTEXITCODE -ne 0) { throw 'Native API check failed' }
       - name: Install Inno Setup
         run: choco install innosetup --yes --no-progress --limit-output
       - name: Build self-contained app and installer

@@ -17,9 +17,10 @@ internal static class NativeDiagnostics
             if (hooks.ScreenCount == 0) throw new InvalidOperationException("No display geometry available");
         }
         var segmenter = new global::Windows.Data.Text.WordsSegmenter("zh-Hans");
-        var words = WordAnalysis.Count(segmenter.GetTokens("软件 开发 TRACE trace").Select(x => x.Text));
+        var tokens = segmenter.GetTokens("软件 开发 TRACE trace").Select(x => x.Text).ToArray();
+        var words = WordAnalysis.Count(tokens);
         if (words.GetValueOrDefault("trace") != 2 || !words.ContainsKey("软件"))
-            throw new InvalidOperationException("Windows word segmentation failed");
+            throw new InvalidOperationException("Windows word segmentation failed for fixed synthetic fixture. Language=" + segmenter.ResolvedLanguage + "; tokens=" + string.Join("|", tokens));
         var path = Path.GetFullPath(output);
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, "PASS — packaged native hook initialization/cleanup, monitor geometry, Windows Chinese/English segmentation. No statistics saved.");
