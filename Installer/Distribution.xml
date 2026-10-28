@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<installer-gui-script minSpecVersion="2">
+    <title>迹 · Trace</title>
+    <welcome file="welcome.html" mime-type="text/html"/>
+    <readme file="readme.html" mime-type="text/html"/>
+    <options customize="never" require-scripts="false" hostArchitectures="arm64,x86_64"/>
+    <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>
+    <allowed-os-versions>
+        <os-version min="13.0"/>
+    </allowed-os-versions>
+    <choices-outline>
+        <line choice="default">
+            <line choice="com.local.trace.desktop.pkg"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="com.local.trace.desktop.pkg" visible="false" title="迹 · Trace">
+        <pkg-ref id="com.local.trace.desktop.pkg"/>
+    </choice>
+    <pkg-ref id="com.local.trace.desktop.pkg" version="__TRACE_VERSION__" onConclusion="none">Trace-component.pkg</pkg-ref>
+</installer-gui-script>

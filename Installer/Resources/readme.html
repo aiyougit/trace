@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+body { font-family: -apple-system, sans-serif; font-size: 12px; line-height: 1.65; color: #243139; margin: 22px; }
+h2 { font-size: 16px; margin: 17px 0 6px; } code { font-size: 11px; }
+</style></head><body>
+<h2>安装位置与已有数据</h2>
+<p>程序将安装到 <code>/Applications/Trace.app</code>。安装会更新该位置的旧版本，不会删除已有统计。</p>
+<p>数据位于 <code>~/Library/Application Support/Trace/</code>。卸载程序时，可将「应用程序」中的 Trace 移到废纸篓；统计数据会保留。</p>
+<h2>首次启动与系统权限</h2>
+<p>安装后，从「应用程序」启动 Trace。在「设置与隐私」中开启「输入监控」，即可统计鼠标距离和键盘次数。词语画像另需「辅助功能」权限。</p>
+<p>如果系统开关已开而应用显示未生效，请移除系统权限列表中的旧 Trace，再重新添加 <code>/Applications/Trace.app</code>，开启权限后完全退出并重新打开。</p>
+<h2>窗口操作</h2>
+<p>点击 Dock 图标展开普通统计面板。最小化、关闭面板或切换到其他应用时，自动变成置顶悬浮条。右键悬浮条可以展开、暂停或隐藏。</p>
+<h2>开发版说明</h2>
+<p>这是本地开发安装包，尚未使用 Apple Developer ID Installer 签名或公证。开发版重新编译后，可能需要重新添加系统权限。本安装包不包含自动启动或强制退出应用的脚本。</p>
+</body></html>

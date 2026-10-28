@@ -1,0 +1,31 @@
+name: 问题反馈
+description: 报告 Trace 的可复现问题
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: 请使用虚构文本复现，不要上传真实统计文件、私人词语或含个人信息的截图。
+  - type: input
+    id: environment
+    attributes:
+      label: 运行环境
+      description: macOS 版本、Apple Silicon / Intel、Trace 版本
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: 预期与实际结果
+    validations:
+      required: true
+  - type: textarea
+    id: permissions
+    attributes:
+      label: 相关状态
+      description: 输入监控、辅助功能、暂停、排除应用、词语画像开关等

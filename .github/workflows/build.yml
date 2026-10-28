@@ -1,0 +1,36 @@
+name: macOS build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Core checks
+        run: ./scripts/test.sh
+      - name: Build universal app
+        run: ./scripts/build.sh --universal
+      - name: Package installer
+        run: ./scripts/package.sh
+      - name: Archive app and checksums
+        run: |
+          VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' dist/Trace.app/Contents/Info.plist)
+          ditto -c -k --sequesterRsrc --keepParent dist/Trace.app "dist/Trace-${VERSION}-universal.app.zip"
+          cd dist
+          shasum -a 256 "Trace-${VERSION}-universal.pkg" "Trace-${VERSION}-universal.app.zip" > SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Trace-macOS-universal
+          path: |
+            dist/*.pkg
+            dist/*.app.zip
+            dist/SHA256SUMS.txt
+          if-no-files-found: error
