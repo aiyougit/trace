@@ -32,27 +32,27 @@ public partial class MainWindow : Window
         SourceInitialized += (_, _) => ThemeManager.ApplyTitleBar(this);
         if (controller is not null)
         {
-            Closing += ClosingToFloat;
+            Closing += ClosingToTray;
             StateChanged += (_, _) =>
             {
                 if (controller.Changing || controller.Exiting) return;
-                if (WindowState == WindowState.Minimized) controller.ShowFloating();
-                else if (controller.IsFloating) controller.ShowDashboard();
+                if (WindowState == WindowState.Minimized) controller.HideToTray();
+                else if (controller.IsFloating || controller.IsTrayHidden) controller.ShowDashboard();
             };
             Deactivated += (_, _) =>
             {
-                if (controller.DialogDepth > 0 || controller.Changing) return;
+                if (controller.DialogDepth > 0 || controller.Changing || controller.IsTrayHidden || !IsVisible) return;
                 Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
                 {
-                    if (!controller.Exiting && !controller.Changing && controller.DialogDepth == 0 && WindowState != WindowState.Minimized && Win32.ForegroundProcess() != Environment.ProcessId)
+                    if (!controller.Exiting && !controller.Changing && !controller.IsTrayHidden && IsVisible && controller.DialogDepth == 0 && WindowState != WindowState.Minimized && Win32.ForegroundProcess() != Environment.ProcessId)
                         controller.ShowFloating();
                 }));
             };
         }
     }
-    private void ClosingToFloat(object? sender, CancelEventArgs args)
+    private void ClosingToTray(object? sender, CancelEventArgs args)
     {
-        if (controller is not null && !controller.Exiting) { args.Cancel = true; controller.ShowFloating(); }
+        if (controller is not null && !controller.Exiting) { args.Cancel = true; controller.HideToTray(); }
     }
     internal void ShowTab(string tab)
     {

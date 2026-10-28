@@ -20,6 +20,9 @@ internal sealed class AppController : IDisposable
     private readonly Forms.ContextMenuStrip menu;
     private DateTime nextUi;
     internal bool IsFloating => floating.IsVisible;
+    internal bool IsTrayHidden { get; private set; }
+    internal bool TrayVisible => tray.Visible;
+    internal Forms.ContextMenuStrip TrayMenu => menu;
     internal bool Changing { get; private set; }
     internal bool Exiting { get; private set; }
     internal int DialogDepth { get; private set; }
@@ -39,7 +42,7 @@ internal sealed class AppController : IDisposable
         using var stream = Application.GetResourceStream(new Uri("pack://application:,,,/Assets/Trace.ico")).Stream;
         using var icon = new Icon(stream);
         tray = new Forms.NotifyIcon { Icon = (Icon)icon.Clone(), Text = "迹 · Trace", ContextMenuStrip = menu, Visible = true };
-        tray.DoubleClick += (_, _) => ShowDashboard();
+        tray.MouseDoubleClick += (_, args) => { if (args.Button == Forms.MouseButtons.Left) ShowDashboard(); };
         monitor.Updated += () =>
         {
             if (DateTime.UtcNow < nextUi) return;
@@ -58,7 +61,10 @@ internal sealed class AppController : IDisposable
         Changing = true;
         try
         {
+            IsTrayHidden = false;
+            dashboard.ShowInTaskbar = true;
             dashboard.WindowState = WindowState.Minimized; // Keep an entry in the Windows taskbar.
+            if (!dashboard.IsVisible) dashboard.Show();
             if (!floating.IsVisible) floating.Show();
             store.Preferences.Compact = true; store.SavePreferences();
         }
@@ -70,10 +76,26 @@ internal sealed class AppController : IDisposable
         Changing = true;
         try
         {
-            floating.Hide(); dashboard.Show();
+            IsTrayHidden = false;
+            floating.Hide(); dashboard.ShowInTaskbar = true;
             if (dashboard.WindowState == WindowState.Minimized) dashboard.WindowState = WindowState.Normal;
+            dashboard.Show();
             dashboard.Activate();
             store.Preferences.Compact = false; store.SavePreferences();
+        }
+        finally { Changing = false; }
+    }
+    internal void HideToTray()
+    {
+        if (Exiting || Changing) return;
+        Changing = true;
+        try
+        {
+            // Mark the mode before hiding: deferred deactivation must not reopen the floating strip.
+            IsTrayHidden = true;
+            floating.Hide(); dashboard.Hide();
+            dashboard.ShowInTaskbar = false;
+            dashboard.WindowState = WindowState.Minimized;
         }
         finally { Changing = false; }
     }

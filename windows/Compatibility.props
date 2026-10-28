@@ -2,6 +2,6 @@
   <PropertyGroup>
     <!-- Shared by the app, installer and compatibility checks: Server 2019 / Windows 10 1809. -->
     <TraceMinimumWindowsVersion>10.0.17763</TraceMinimumWindowsVersion>
-    <TraceWindowsVersion>0.1.1</TraceWindowsVersion>
+    <TraceWindowsVersion>0.1.2</TraceWindowsVersion>
   </PropertyGroup>
 </Project>

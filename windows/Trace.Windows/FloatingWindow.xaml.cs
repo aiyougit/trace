@@ -19,7 +19,7 @@ public partial class FloatingWindow : Window
         if (model.Store.Preferences.FloatingTop is { } top && double.IsFinite(top)) Top = top;
         else Top = SystemParameters.WorkArea.Bottom - Height - 28;
         Loaded += (_, _) => EnsureVisible();
-        Closing += (_, args) => { if (controller is not null && !controller.Exiting) { args.Cancel = true; Hide(); } };
+        Closing += (_, args) => { if (controller is not null && !controller.Exiting) { args.Cancel = true; controller.HideToTray(); } };
     }
     private void EnsureVisible()
     {
@@ -42,6 +42,5 @@ public partial class FloatingWindow : Window
     {
         model.Store.Paused = !model.Store.Paused; model.Store.InvalidateText(); model.Refresh(true);
     }
-    private void HideClick(object sender, RoutedEventArgs args) => Hide();
-    private void ExitClick(object sender, RoutedEventArgs args) => controller?.Exit();
+    private void HideClick(object sender, RoutedEventArgs args) => controller?.HideToTray();
 }

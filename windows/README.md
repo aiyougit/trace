@@ -16,6 +16,10 @@
 | --- | --- |
 | <img src="../docs/images/floating-windows-light.png" width="220" alt="淡木悬浮条"> | <img src="../docs/images/floating-windows-dark.png" width="220" alt="夜色悬浮条"> |
 
+## 0.1.2 托盘收起
+
+最小化和关闭按钮现在统一隐藏到右下角系统托盘，不退出、不显示悬浮条，也不保留任务栏按钮；后台继续统计。左键双击图标恢复，右键菜单选择「退出 Trace」才会退出。切换其他应用时仍保留原有悬浮行为。
+
 ## 0.1.1 兼容性修复
 
 旧版 0.1.0 的安装器将最低内部版本限制为 19045，应用 SDK 目标也高于 Server 2019，因而会拒绝 1809 / 17763 系统。0.1.1 将应用和安装器统一到 `10.0.17763` 基线，增加针对 `17763.3532` 的配置回归检查。
@@ -24,10 +28,10 @@ Server 2019 请下载 **x64** 安装包。仅支持具有桌面体验的交互�
 
 ## 下载与安装
 
-从 [Windows 版本发布页](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.1) 下载：
+从 [Windows 版本发布页](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.2) 下载：
 
-- 普通 Intel / AMD 电脑：`Trace-0.1.1-windows-x64-setup.exe`。
-- Snapdragon 等 ARM 电脑：`Trace-0.1.1-windows-arm64-setup.exe`。
+- 普通 Intel / AMD 电脑：`Trace-0.1.2-windows-x64-setup.exe`。
+- Snapdragon 等 ARM 电脑：`Trace-0.1.2-windows-arm64-setup.exe`。
 - 无需安装器：选择对应架构的 `portable.zip`，解压后运行 `Trace.exe`。
 
 安装器按当前用户安装到 `%LOCALAPPDATA%\Programs\Trace`，提供开始菜单入口和卸载项，桌面快捷方式可选。程序自带 .NET 运行时，不需要另装 .NET；不安装服务、不设置开机启动。首次启动即开始本地基础统计，可在托盘菜单暂停或退出。词语画像默认关闭。
@@ -37,9 +41,9 @@ Server 2019 请下载 **x64** 安装包。仅支持具有桌面体验的交互�
 ## 窗口和外观
 
 - 220 × 44 DIP 悬浮条只显示今日鼠标距离与键盘输入次数，支持高 DPI 缩放。
-- 拖动移动，双击展开，右键暂停 / 继续、隐藏或退出。
-- 主面板不置顶，切换其他应用、最小化或关闭时自动收起；文件选择器和确认对话框不触发折叠。
-- 主面板收起后保留任务栏入口；任务栏点击恢复，托盘双击也可展开。Windows 可能将托盘图标放在「显示隐藏的图标」区域。
+- 悬浮条可拖动移动、双击展开，右键可暂停 / 继续或隐藏到系统托盘；悬浮条菜单不提供退出。
+- 主面板不置顶；切换其他应用仍自动显示悬浮条，文件选择器和确认对话框不触发折叠。点击标题栏「—」或「×」（包括 Alt+F4）则隐藏面板和悬浮条到右下角系统托盘，任务栏入口同时消失，后台统计继续。
+- 左键双击托盘图标恢复统计面板；右键托盘可选择展开面板、显示悬浮条、暂停 / 继续统计或「退出 Trace」。应用内仅托盘右键菜单提供退出入口。悬浮模式仍保留任务栏入口。Windows 可能将托盘图标放在「显示隐藏的图标」（向上箭头）区域。
 - 设置中切换「浅色 · 淡木」/「深色 · 夜色」，立即适配悬浮条并记住选择。
 - 悬浮条背景轻微透明，文字保持不透明；尊重系统透明效果关闭设置。Windows 版使用半透明背景，不宣称具有 macOS 的原生磨砂效果。
 
@@ -89,7 +93,7 @@ dotnet run --project windows/Trace.CoreChecks -c Release
 ```powershell
 # 独立演示数据、两种主题的界面渲染，不启动任何输入监听：
 dotnet run --project windows/Trace.Windows -c Release -- --render-previews dist/windows-previews
-Get-FileHash ./Trace-0.1.1-windows-x64-setup.exe -Algorithm SHA256
+Get-FileHash ./Trace-0.1.2-windows-x64-setup.exe -Algorithm SHA256
 ```
 
 最低系统版本和 Windows 版本号集中在 `windows/Compatibility.props`，构建脚本据此生成安装器限制；`scripts/test-windows-compatibility.ps1` 检查应用目标和安装器保持一致。

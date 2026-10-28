@@ -1,5 +1,5 @@
 ﻿#ifndef TraceVersion
-  #define TraceVersion "0.1.1"
+  #define TraceVersion "0.1.2"
 #endif
 #ifndef TraceMinimumWindowsVersion
   #error TraceMinimumWindowsVersion must be provided from windows/Compatibility.props by build-windows.ps1

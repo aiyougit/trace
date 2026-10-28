@@ -12,7 +12,7 @@
 ![Universal](https://img.shields.io/badge/架构-Apple%20Silicon%20%2B%20Intel-8A9464)
 [![MIT License](https://img.shields.io/badge/License-MIT-C4A16B)](LICENSE)
 
-[macOS 下载](https://github.com/aiyougit/trace/releases/tag/v0.3.0) · [Windows 下载](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.1) · [macOS 指南](docs/使用指南.md) · [Windows 指南](windows/README.md) · [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md)
+[macOS 下载](https://github.com/aiyougit/trace/releases/tag/v0.3.0) · [Windows 下载](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.2) · [macOS 指南](docs/使用指南.md) · [Windows 指南](windows/README.md) · [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md)
 
 <img src="docs/images/overview-light.png" alt="迹 Trace 淡木主题概览面板，展示鼠标距离、键盘输入次数与小时活动" width="960">
 
@@ -27,7 +27,7 @@
 - **键盘热力图**：用颜色和排行了解每个按键的使用频率。
 - **中英文词语画像**：可选开启，通过系统分词查看高频词与字符统计。
 - **两种外观**：清淡的奶油黄木色「浅色 · 淡木」，以及薄荷点缀的「深色 · 夜色」，面板与悬浮条同步切换并记住选择。
-- **自然的窗口行为**：统计面板正常显示，只有悬浮条置顶；最小化、关闭面板或切换其他应用时自动收起。macOS 支持 Dock / 菜单栏，Windows 支持任务栏 / 系统托盘。
+- **自然的窗口行为**：统计面板正常显示，只有悬浮条置顶。Windows 点击最小化或关闭按钮会隐藏到系统托盘，右键托盘图标才可退出；切换应用仍自动显示悬浮条。macOS 保留自动收起与 Dock / 菜单栏入口。
 - **本地数据管理**：暂停统计、排除指定应用、导出 JSON、清空画像或全部统计。
 
 macOS 使用 SwiftUI、AppKit、CoreGraphics、Accessibility 与 NaturalLanguage；Windows 使用 .NET 10 / WPF、Win32、UI Automation 与 本地词典分词。两端均采用原生桌面实现，**统计留在本机，不发起网络请求**。Windows 安装包自带 .NET 运行时。
@@ -74,7 +74,7 @@ macOS 使用 SwiftUI、AppKit、CoreGraphics、Accessibility 与 NaturalLanguage
 | 平台 | 系统要求 | 架构 | 下载 |
 | --- | --- | --- | --- |
 | macOS 0.3.0 | macOS 13+ | Apple Silicon / Intel 通用 | [PKG / APP ZIP](https://github.com/aiyougit/trace/releases/tag/v0.3.0) |
-| Windows 0.1.1 | Windows 10 1809+ / Windows 11；Server 2019+ 桌面体验版（x64） | x64 / ARM64 分别下载 | [EXE 安装器 / 便携 ZIP](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.1) |
+| Windows 0.1.2 | Windows 10 1809+ / Windows 11；Server 2019+ 桌面体验版（x64） | x64 / ARM64 分别下载 | [EXE 安装器 / 便携 ZIP](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.2) |
 
 ### macOS
 
@@ -99,9 +99,9 @@ shasum -a 256 -c SHA256SUMS.txt
 
 ### Windows
 
-常见 Intel / AMD 电脑选择 `Trace-0.1.1-windows-x64-setup.exe`，ARM 电脑选择 `Trace-0.1.1-windows-arm64-setup.exe`。也提供对应架构的便携 ZIP，解压后运行 `Trace.exe`。安装器按当前用户安装，不需要单独安装 .NET、不设置开机启动；更新及卸载不会主动删除统计。
+常见 Intel / AMD 电脑选择 `Trace-0.1.2-windows-x64-setup.exe`，ARM 电脑选择 `Trace-0.1.2-windows-arm64-setup.exe`。也提供对应架构的便携 ZIP，解压后运行 `Trace.exe`。安装器按当前用户安装，不需要单独安装 .NET、不设置开机启动；更新及卸载不会主动删除统计。
 
-首次运行即可开始基础统计，词语画像默认关闭。主面板收起后保留任务栏入口，也可通过托盘双击展开。Windows 不使用下面的 macOS 权限页；普通用户权限无法读取的窗口和安全桌面会跳过。
+首次运行即可开始基础统计，词语画像默认关闭。点击主面板的最小化或关闭按钮后隐藏到右下角系统托盘，后台继续统计；左键双击托盘图标恢复面板，右键菜单选择「退出 Trace」才会退出。手动悬浮或切换应用时仍保留悬浮条及任务栏入口。Windows 不使用下面的 macOS 权限页；普通用户权限无法读取的窗口和安全桌面会跳过。
 
 当前 Windows EXE / 安装器未进行商业代码签名，可能出现 SmartScreen 或未知发布者提示。请核对 Release 的 SHA-256，并按系统正常流程决定是否运行。详见 [Windows 安装、功能与隐私说明](windows/README.md)。ARM64 已完成交叉构建，运行行为仍需 ARM64 真机验证。
 
