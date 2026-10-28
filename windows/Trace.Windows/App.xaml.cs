@@ -25,6 +25,16 @@ public partial class App : Application
             }
             return;
         }
+        if (args.Args.Length == 2 && args.Args[0] == "--check-native")
+        {
+            try { NativeDiagnostics.Run(args.Args[1]); Shutdown(0); }
+            catch (Exception error)
+            {
+                var path = Path.GetFullPath(args.Args[1]); Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                File.WriteAllText(path, error.ToString()); Shutdown(1);
+            }
+            return;
+        }
         instance = new Mutex(true, @"Local\Trace.Desktop.SingleInstance", out ownsMutex);
         if (!ownsMutex)
         {

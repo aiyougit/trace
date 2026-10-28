@@ -44,6 +44,14 @@ jobs:
         run: choco install innosetup --yes --no-progress --limit-output
       - name: Build self-contained app and installer
         run: ./scripts/build-windows.ps1 -Runtime ${{ matrix.runtime }} -SkipChecks
+      - name: Packaged native API smoke check
+        if: matrix.runtime == 'win-x64'
+        run: |
+          $App = Resolve-Path dist/windows/win-x64/app/Trace.exe
+          $Report = Join-Path $env:RUNNER_TEMP 'TraceNativeChecks.txt'
+          $Process = Start-Process -FilePath $App -ArgumentList "--check-native `"$Report`"" -Wait -PassThru
+          Get-Content $Report -ErrorAction SilentlyContinue
+          if ($Process.ExitCode -ne 0) { throw 'Packaged native API smoke check failed' }
       - name: Installer unattended smoke check
         if: matrix.runtime == 'win-x64'
         run: |

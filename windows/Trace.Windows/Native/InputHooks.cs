@@ -30,6 +30,7 @@ internal sealed class InputHooks : IDisposable
     internal bool Listening { get; private set; }
     internal string? Error { get; private set; }
     internal long Dropped { get; private set; }
+    internal int ScreenCount => Volatile.Read(ref screens).Length;
     internal InputHooks()
     {
         keyboardProc = Keyboard;
