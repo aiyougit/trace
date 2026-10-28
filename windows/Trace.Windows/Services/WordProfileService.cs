@@ -96,8 +96,11 @@ internal sealed class WordProfileService : IDisposable
                 var sameField = identity == runtimeId && day == today && generation == current.Generation;
                 if (sameField && (keyTicks <= seenKey || Volatile.Read(ref lastKeyProcess) != foreground || DateTime.UtcNow.Ticks - keyTicks < TimeSpan.TicksPerMillisecond * 650)) continue;
                 string? text = null;
-                if (element.TryGetCurrentPattern(ValuePattern.Pattern, out var valueObject) && valueObject is ValuePattern value && !value.Current.IsReadOnly)
+                if (element.TryGetCurrentPattern(ValuePattern.Pattern, out var valueObject) && valueObject is ValuePattern value)
+                {
+                    if (value.Current.IsReadOnly) { Reset(); status = "只读输入框，已跳过"; continue; }
                     text = value.Current.Value;
+                }
                 else if (control == ControlType.Edit && element.TryGetCurrentPattern(TextPattern.Pattern, out var textObject) && textObject is TextPattern pattern)
                     text = pattern.DocumentRange.GetText(30001);
                 if (text is null || text.Length > 30000)

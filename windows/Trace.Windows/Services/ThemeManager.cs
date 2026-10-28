@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 using System.Windows;
 using System.Windows.Media;
 
@@ -7,6 +9,15 @@ namespace Trace.Windows.Services;
 
 internal static class ThemeManager
 {
+    [DllImport("dwmapi.dll")]
+    private static extern int DwmSetWindowAttribute(IntPtr window, int attribute, ref int value, int size);
+    internal static void ApplyTitleBar(Window window)
+    {
+        var handle = new WindowInteropHelper(window).Handle;
+        if (handle == IntPtr.Zero) return;
+        var dark = Current == "dark" ? 1 : 0;
+        DwmSetWindowAttribute(handle, 20, ref dark, sizeof(int));
+    }
     internal static string Current { get; private set; } = "light";
     internal static void Apply(string theme)
     {
@@ -39,5 +50,6 @@ internal static class ThemeManager
             var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(pair.Value)); brush.Freeze();
             Application.Current.Resources[pair.Key] = brush;
         }
+        foreach (Window window in Application.Current.Windows) ApplyTitleBar(window);
     }
 }

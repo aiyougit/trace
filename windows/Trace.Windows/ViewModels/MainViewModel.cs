@@ -53,6 +53,7 @@ internal sealed class MainViewModel : INotifyPropertyChanged
     public string WordCountText { get; private set; } = "0";
     public string Status => monitor?.Status ?? "演示数据 · 未启用监听";
     public string TextStatus => monitor?.TextStatus ?? "独立示例数据 · 无真实输入";
+    public bool Paused => Store.Paused;
     public string PauseText => Store.Paused ? "继续统计" : "暂停统计";
     public string TodayLabel => DateTime.Now.ToString("yyyy年M月d日 dddd", CultureInfo.GetCultureInfo("zh-CN"));
     public string PeriodLabel => Cumulative ? "累计 · 按小时汇总" : "今日 · 按小时统计";

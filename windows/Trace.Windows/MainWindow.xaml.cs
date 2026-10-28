@@ -29,6 +29,7 @@ public partial class MainWindow : Window
         WordToggle.IsChecked = model.Store.Data.WordTrackingEnabled;
         model.SnapshotChanged += UpdateKeyboard;
         ready = true;
+        SourceInitialized += (_, _) => ThemeManager.ApplyTitleBar(this);
         if (controller is not null)
         {
             Closing += ClosingToFloat;
@@ -36,7 +37,7 @@ public partial class MainWindow : Window
             {
                 if (controller.Changing || controller.Exiting) return;
                 if (WindowState == WindowState.Minimized) controller.ShowFloating();
-                else controller.ShowDashboard();
+                else if (controller.IsFloating) controller.ShowDashboard();
             };
             Deactivated += (_, _) =>
             {

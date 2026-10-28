@@ -22,7 +22,7 @@ DefaultDirName={localappdata}\Programs\Trace
 DefaultGroupName=迹 · Trace
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
-MinVersion=10.0.19041
+MinVersion=10.0.19045
 #if TraceArchitecture == "arm64"
 ArchitecturesAllowed=arm64
 ArchitecturesInstallIn64BitMode=arm64

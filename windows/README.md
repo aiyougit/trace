@@ -1,6 +1,6 @@
 # 迹 · Trace for Windows
 
-原生 WPF 版本，支持 **Windows 10 2004（19041）及以上 / Windows 11**，提供 x64 与 ARM64 构建。旧的 32 位 Windows 不支持。与 macOS 使用相同的产品设计，各平台分别使用系统原生界面与输入接口。
+原生 WPF 版本，支持 **Windows 10 22H2（19045）/ Windows 11**，提供 x64 与 ARM64 构建。旧的 32 位 Windows 不支持。与 macOS 使用相同的产品设计，各平台分别使用系统原生界面与输入接口。
 
 ## 下载与安装
 

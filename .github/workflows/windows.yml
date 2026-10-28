@@ -2,7 +2,15 @@ name: Windows build
 
 on:
   push:
+    paths:
+      - 'windows/**'
+      - 'scripts/build-windows.ps1'
+      - '.github/workflows/windows.yml'
   pull_request:
+    paths:
+      - 'windows/**'
+      - 'scripts/build-windows.ps1'
+      - '.github/workflows/windows.yml'
   workflow_dispatch:
 
 permissions:

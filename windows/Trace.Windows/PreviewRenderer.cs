@@ -36,6 +36,8 @@ internal static class PreviewRenderer
                 {
                     window.ShowTab(page);
                     Render(window.Root, 1040, 760, Path.Combine(output, $"{page}-windows-{theme}.png"));
+                    if (((SolidColorBrush)window.PageTitle.Foreground).Color != ((SolidColorBrush)Application.Current.Resources["TextBrush"]).Color)
+                        throw new InvalidOperationException("Window text does not match the selected theme");
                 }
                 var floating = new FloatingWindow(model, null);
                 Render(floating.Root, 220, 44, Path.Combine(output, $"floating-windows-{theme}.png"));

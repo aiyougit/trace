@@ -19,6 +19,7 @@ internal sealed class AppController : IDisposable
     private readonly Forms.NotifyIcon tray;
     private readonly Forms.ContextMenuStrip menu;
     private DateTime nextUi;
+    internal bool IsFloating => floating.IsVisible;
     internal bool Changing { get; private set; }
     internal bool Exiting { get; private set; }
     internal int DialogDepth { get; private set; }
@@ -69,7 +70,9 @@ internal sealed class AppController : IDisposable
         Changing = true;
         try
         {
-            floating.Hide(); dashboard.Show(); dashboard.WindowState = WindowState.Normal; dashboard.Activate();
+            floating.Hide(); dashboard.Show();
+            if (dashboard.WindowState == WindowState.Minimized) dashboard.WindowState = WindowState.Normal;
+            dashboard.Activate();
             store.Preferences.Compact = false; store.SavePreferences();
         }
         finally { Changing = false; }
