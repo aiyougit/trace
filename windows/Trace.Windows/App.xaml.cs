@@ -39,7 +39,12 @@ public partial class App : Application
         if (!ownsMutex)
         {
             var window = Win32.FindWindow(null, "迹 · Trace");
-            if (window != IntPtr.Zero) { Win32.ShowWindow(window, 9); Win32.SetForegroundWindow(window); }
+            if (window != IntPtr.Zero)
+            {
+                Win32.PostMessage(window, Win32.RestoreDashboardMessage, IntPtr.Zero, IntPtr.Zero);
+                // Keep the native restore as a fallback when an older Trace instance owns the mutex.
+                Win32.ShowWindow(window, 9); Win32.SetForegroundWindow(window);
+            }
             Shutdown(); return;
         }
         try { controller = new(); }

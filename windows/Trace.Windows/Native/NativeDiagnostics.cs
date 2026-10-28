@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using Trace.Core;
 
@@ -56,8 +57,17 @@ internal static class NativeDiagnostics
                     controller.ShowDashboard(); CheckRestored();
                     dashboard.Close();
                     CheckTray("Close button / Alt+F4");
-                    // A second launch restores the hidden HWND; its normal-state event must restore taskbar visibility too.
-                    dashboard.WindowState = WindowState.Normal;
+                    // Exercise the same HWND message path used by a second process launching Trace.
+                    // A dialog guard isolates these checks from the CI desktop's foreground app.
+                    controller.Dialog(() =>
+                    {
+                        var handle = new WindowInteropHelper(dashboard).Handle;
+                        if (!Win32.PostMessage(handle, Win32.RestoreDashboardMessage, IntPtr.Zero, IntPtr.Zero))
+                            throw new InvalidOperationException("Restore message delivery failed");
+                        Win32.ShowWindow(handle, 9); Win32.SetForegroundWindow(handle);
+                        Application.Current.Dispatcher.Invoke(() => { }, DispatcherPriority.Background);
+                        return true;
+                    });
                     CheckRestored();
                 }
                 controller.ShowFloating();

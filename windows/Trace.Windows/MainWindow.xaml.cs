@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Microsoft.Win32;
@@ -29,7 +30,11 @@ public partial class MainWindow : Window
         WordToggle.IsChecked = model.Store.Data.WordTrackingEnabled;
         model.SnapshotChanged += UpdateKeyboard;
         ready = true;
-        SourceInitialized += (_, _) => ThemeManager.ApplyTitleBar(this);
+        SourceInitialized += (_, _) =>
+        {
+            ThemeManager.ApplyTitleBar(this);
+            HwndSource.FromHwnd(new WindowInteropHelper(this).Handle)?.AddHook(WindowMessage);
+        };
         if (controller is not null)
         {
             Closing += ClosingToTray;
@@ -49,6 +54,16 @@ public partial class MainWindow : Window
                 }));
             };
         }
+    }
+    private IntPtr WindowMessage(IntPtr window, int message, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        if (message == Win32.RestoreDashboardMessage && controller is not null && !controller.Exiting)
+        {
+            // Restore via WPF as well as Win32 so hidden visibility and taskbar state stay synchronized.
+            Dispatcher.BeginInvoke(new Action(controller.ShowDashboard));
+            handled = true;
+        }
+        return IntPtr.Zero;
     }
     private void ClosingToTray(object? sender, CancelEventArgs args)
     {

@@ -6,6 +6,7 @@ namespace Trace.Windows.Native;
 
 internal static class Win32
 {
+    internal const int RestoreDashboardMessage = 0x8000 + 0x54;
     internal delegate IntPtr HookProc(int code, IntPtr message, IntPtr data);
     internal delegate bool MonitorEnumProc(IntPtr monitor, IntPtr hdc, ref Rect rect, IntPtr data);
     [StructLayout(LayoutKind.Sequential)] internal struct Point { public int X, Y; }
@@ -24,6 +25,7 @@ internal static class Win32
     [DllImport("user32.dll")] internal static extern int GetMessage(out Message message, IntPtr window, uint min, uint max);
     [DllImport("user32.dll")] internal static extern bool PeekMessage(out Message message, IntPtr window, uint min, uint max, uint remove);
     [DllImport("user32.dll")] internal static extern bool PostThreadMessage(uint thread, uint message, UIntPtr wParam, IntPtr lParam);
+    [DllImport("user32.dll")] [return: MarshalAs(UnmanagedType.Bool)] internal static extern bool PostMessage(IntPtr window, uint message, IntPtr wParam, IntPtr lParam);
     [DllImport("kernel32.dll")] internal static extern uint GetCurrentThreadId();
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode)] internal static extern IntPtr GetModuleHandle(string? name);
     [DllImport("user32.dll")] internal static extern IntPtr GetForegroundWindow();
