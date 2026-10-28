@@ -14,3 +14,9 @@ dist/
 *.keychain
 *.keychain-db
 statistics.json
+# Windows / .NET
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo

@@ -1,0 +1,61 @@
+name: Windows build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Windows ${{ matrix.runtime }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        runtime: [win-x64, win-arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Core checks
+        run: dotnet run --project windows/Trace.CoreChecks -c Release
+      - name: WPF view and theme smoke checks
+        if: matrix.runtime == 'win-x64'
+        run: |
+          dotnet run --project windows/Trace.Windows -c Release -- --render-previews "${{ github.workspace }}/dist/windows-previews"
+          if ($LASTEXITCODE -ne 0) {
+            Get-Content dist/windows-previews/preview-error.txt -ErrorAction SilentlyContinue
+            throw 'WPF preview failed'
+          }
+          Get-Content dist/windows-previews/smoke-checks.txt
+      - name: Install Inno Setup
+        run: choco install innosetup --yes --no-progress --limit-output
+      - name: Build self-contained app and installer
+        run: ./scripts/build-windows.ps1 -Runtime ${{ matrix.runtime }} -SkipChecks
+      - name: Installer unattended smoke check
+        if: matrix.runtime == 'win-x64'
+        run: |
+          $Setup = Resolve-Path dist/windows/win-x64/Trace-0.1.0-windows-x64-setup.exe
+          $Target = Join-Path $env:RUNNER_TEMP 'TraceInstallSmoke'
+          $Process = Start-Process -FilePath $Setup -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /DIR=`"$Target`" /LOG=`"$env:RUNNER_TEMP/TraceInstall.log`"" -Wait -PassThru
+          if ($Process.ExitCode -ne 0 -or -not (Test-Path "$Target/Trace.exe")) { throw 'Installer smoke check failed' }
+          $Uninstaller = Start-Process -FilePath "$Target/unins000.exe" -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART' -Wait -PassThru
+          if ($Uninstaller.ExitCode -ne 0) { throw 'Uninstaller smoke check failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Trace-Windows-${{ matrix.runtime }}
+          path: |
+            dist/windows/${{ matrix.runtime }}/*.exe
+            dist/windows/${{ matrix.runtime }}/*.zip
+            dist/windows/${{ matrix.runtime }}/*.txt
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.runtime == 'win-x64'
+        with:
+          name: Trace-Windows-previews
+          path: dist/windows-previews/
+          if-no-files-found: ignore
