@@ -2,6 +2,20 @@
 
 原生 WPF 版本，支持 **Windows 10 22H2（19045）/ Windows 11**，提供 x64 与 ARM64 构建。旧的 32 位 Windows 不支持。与 macOS 使用相同的产品设计，各平台分别使用系统原生界面与输入接口。
 
+## 界面预览
+
+所有截图使用虚构演示数据，由 Windows 原生 WPF 渲染，不启动监听。
+
+![Windows 淡木概览](../docs/images/overview-windows-light.png)
+
+| 夜色键盘热力 | 淡木词语画像 |
+| --- | --- |
+| ![键盘热力](../docs/images/keyboard-windows-dark.png) | ![词语画像](../docs/images/words-windows-light.png) |
+
+| 淡木悬浮条 | 夜色悬浮条 |
+| --- | --- |
+| <img src="../docs/images/floating-windows-light.png" width="220" alt="淡木悬浮条"> | <img src="../docs/images/floating-windows-dark.png" width="220" alt="夜色悬浮条"> |
+
 ## 下载与安装
 
 从 [Windows 版本发布页](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.0) 下载：
@@ -33,7 +47,7 @@
 
 ## 可选词语画像
 
-通过 **Windows UI Automation** 观察受支持的可编辑输入框，用 **Windows WordsSegmenter** 进行中英文分词。
+通过 **Windows UI Automation** 观察受支持的可编辑输入框，用 **随程序附带的本地中文词典** 进行中英文分词，不依赖系统是否安装中文语言包。词典来自 MIT 许可的 jieba 小词典，随程序打包；来源及完整许可证位于 [ThirdParty/Jieba](ThirdParty/Jieba)。中文采用词频 DAG 切分，不包含 HMM 新词识别，未知词可能拆分或被过滤。
 
 - 默认关闭，开启后只归因观察输入框后新增的文本，已有文章不直接当作输入记录。
 - 输入框基线和编辑草稿短暂保留在内存，用于修正输入法替换和删除；不写入磁盘、日志或导出文件。
@@ -72,4 +86,4 @@ dotnet run --project windows/Trace.Windows -c Release -- --render-previews dist/
 Get-FileHash ./Trace-0.1.0-windows-x64-setup.exe -Algorithm SHA256
 ```
 
-GitHub Actions 在 Windows 上执行核心检查、WPF 视图 / 主题渲染、自带运行时发布以及 x64 安装 / 卸载检查。真实输入设备、中文输入法、不同应用的 UIA 兼容性和 ARM64 运行行为需在相应机器上体验验证。
+GitHub Actions 在 Windows 上执行核心检查、WPF 视图 / 主题渲染、已打包程序的原生监听接口、本地分词及应用启动 / 窗口模式检查、自带运行时发布以及 x64 安装 / 卸载检查。真实输入设备、中文输入法、不同应用的 UIA 兼容性和 ARM64 运行行为需在相应机器上体验验证。

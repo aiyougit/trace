@@ -1,0 +1,2 @@
+# Upstream MIT-licensed dictionary; exclude it from authored-code language statistics.
+windows/ThirdParty/Jieba/dict.txt.small linguist-vendored=true

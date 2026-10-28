@@ -4,14 +4,15 @@
 
 **把每天的键盘与鼠标活动，变成看得见的数字足迹。**
 
-原生 macOS 桌面统计工具 · 淡木 / 夜色双主题 · 轻量悬浮窗 · 本地保存
+原生桌面统计工具（macOS / Windows） · 淡木 / 夜色双主题 · 轻量悬浮窗 · 本地保存
 
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-black?logo=apple)
+![Windows 10 / 11](https://img.shields.io/badge/Windows-10%20%2F%2011-0078D4?logo=windows)
 ![Swift 5.9+](https://img.shields.io/badge/Swift-5.9%2B-F05138?logo=swift&logoColor=white)
 ![Universal](https://img.shields.io/badge/架构-Apple%20Silicon%20%2B%20Intel-8A9464)
 [![MIT License](https://img.shields.io/badge/License-MIT-C4A16B)](LICENSE)
 
-[下载安装](https://github.com/aiyougit/trace-macos/releases/latest) · [完整使用指南](docs/使用指南.md) · [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md)
+[macOS 下载](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0) · [Windows 下载](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.0) · [macOS 指南](docs/使用指南.md) · [Windows 指南](windows/README.md) · [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md)
 
 <img src="docs/images/overview-light.png" alt="迹 Trace 淡木主题概览面板，展示鼠标距离、键盘输入次数与小时活动" width="960">
 
@@ -21,15 +22,15 @@
 
 ## 它能做什么
 
-- **桌面悬浮条**：220 × 44 点，只显示当天鼠标移动距离与键盘输入次数，可拖动、右键操作，轻微透明的原生磨砂背景。
+- **桌面悬浮条**：220 × 44 点，只显示当天鼠标移动距离与键盘输入次数，可拖动、右键操作，轻微透明的背景（macOS 使用原生磨砂，Windows 使用半透明背景）。
 - **活动概览**：查看今天 / 累计数据，以及每小时的键盘活动分布。
 - **键盘热力图**：用颜色和排行了解每个按键的使用频率。
 - **中英文词语画像**：可选开启，通过系统分词查看高频词与字符统计。
 - **两种外观**：清淡的奶油黄木色「浅色 · 淡木」，以及薄荷点缀的「深色 · 夜色」，面板与悬浮条同步切换并记住选择。
-- **自然的窗口行为**：统计面板正常显示，只有悬浮条置顶；最小化、关闭面板或切换其他应用时自动收起。支持 Dock 和菜单栏入口。
+- **自然的窗口行为**：统计面板正常显示，只有悬浮条置顶；最小化、关闭面板或切换其他应用时自动收起。macOS 支持 Dock / 菜单栏，Windows 支持任务栏 / 系统托盘。
 - **本地数据管理**：暂停统计、排除指定应用、导出 JSON、清空画像或全部统计。
 
-使用 SwiftUI、AppKit、CoreGraphics、Accessibility 与 NaturalLanguage 构建，**没有第三方运行依赖，不发起网络请求**。
+macOS 使用 SwiftUI、AppKit、CoreGraphics、Accessibility 与 NaturalLanguage；Windows 使用 .NET 10 / WPF、Win32、UI Automation 与 本地词典分词。两端均采用原生桌面实现，**统计留在本机，不发起网络请求**。Windows 安装包自带 .NET 运行时。
 
 ## 界面预览
 
@@ -54,11 +55,32 @@
 
 </details>
 
+### Windows 原生版本
+
+<img src="docs/images/overview-windows-light.png" alt="Windows WPF 淡木主题概览，使用虚构演示数据" width="960">
+
+| Windows 键盘热力（夜色） | Windows 词语画像（淡木） |
+| --- | --- |
+| ![Windows 夜色键盘热力图](docs/images/keyboard-windows-dark.png) | ![Windows 淡木词语画像](docs/images/words-windows-light.png) |
+
+| Windows 淡木悬浮条 | Windows 夜色悬浮条 |
+| --- | --- |
+| <img src="docs/images/floating-windows-light.png" alt="Windows 淡木悬浮条" width="220"> | <img src="docs/images/floating-windows-dark.png" alt="Windows 夜色悬浮条" width="220"> |
+
+这些图片由 Windows 上的 WPF 渲染工具生成，使用虚构数据，不开启监听。Windows 版的架构、兼容性与采样边界见 [Windows 使用指南](windows/README.md)。
+
 ## 下载与安装
+
+| 平台 | 系统要求 | 架构 | 下载 |
+| --- | --- | --- | --- |
+| macOS 0.3.0 | macOS 13+ | Apple Silicon / Intel 通用 | [PKG / APP ZIP](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0) |
+| Windows 0.1.0 | Windows 10 22H2 / Windows 11 | x64 / ARM64 分别下载 | [EXE 安装器 / 便携 ZIP](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.0) |
+
+### macOS
 
 支持 **macOS 13 Ventura 及以上**，同一个通用安装包兼容 **Apple Silicon 和 Intel Mac**。
 
-1. 打开 [最新版本 Releases](https://github.com/aiyougit/trace-macos/releases/latest)，下载 `Trace-0.3.0-universal.pkg`。
+1. 打开 [macOS 版本 Releases](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0)，下载 `Trace-0.3.0-universal.pkg`。
 2. 退出正在运行的 Trace，双击安装包，按 macOS 安装器提示完成安装。应用固定安装到 `/Applications/Trace.app`。
 3. 从「应用程序」启动 Trace，按照下面的说明开启需要的权限。
 
@@ -75,7 +97,15 @@ shasum -a 256 -c SHA256SUMS.txt
 
 校验文件对应同一 Release 的 `.pkg` 与 `.app.zip`，请将它们放在同一目录。
 
-## 第一次授权
+### Windows
+
+常见 Intel / AMD 电脑选择 `Trace-0.1.0-windows-x64-setup.exe`，ARM 电脑选择 `Trace-0.1.0-windows-arm64-setup.exe`。也提供对应架构的便携 ZIP，解压后运行 `Trace.exe`。安装器按当前用户安装，不需要单独安装 .NET、不设置开机启动；更新及卸载不会主动删除统计。
+
+首次运行即可开始基础统计，词语画像默认关闭。主面板收起后保留任务栏入口，也可通过托盘双击展开。Windows 不使用下面的 macOS 权限页；普通用户权限无法读取的窗口和安全桌面会跳过。
+
+当前 Windows EXE / 安装器未进行商业代码签名，可能出现 SmartScreen 或未知发布者提示。请核对 Release 的 SHA-256，并按系统正常流程决定是否运行。详见 [Windows 安装、功能与隐私说明](windows/README.md)。ARM64 已完成交叉构建，运行行为仍需 ARM64 真机验证。
+
+## macOS 第一次授权
 
 | 系统权限 | 用途 | 是否必需 |
 | --- | --- | --- |
@@ -90,7 +120,7 @@ shasum -a 256 -c SHA256SUMS.txt
 
 ## 距离和输入次数怎么算
 
-**鼠标距离是光标在屏幕上的路径估算，不是实体鼠标在桌面上的移动距离。** 程序根据显示器上报的物理毫米尺寸与系统逻辑坐标，换算相邻位置的距离，再逐段累加为米；超过 1,000 米显示公里。显示器未上报尺寸时按 110 PPI 估算，跨屏跳变不累计；远程桌面、虚拟屏幕或合并事件可能影响精度。
+**鼠标距离是光标在屏幕上的路径估算，不是实体鼠标在桌面上的移动距离。** 程序根据显示器上报的毫米尺寸换算相邻坐标的距离，再逐段累加为米；超过 1,000 米显示公里。macOS 使用逻辑坐标，缺失尺寸时按 110 PPI 估算；Windows 使用物理像素坐标及 GDI 驱动尺寸，缺失时按 96 PPI 估算。驱动尺寸本身也可能是估值。两端均跳过跨屏跳变；远程桌面、虚拟屏幕或合并事件可能影响精度。
 
 **键盘次数按物理按键按下统计**，包含修饰键，忽略长按产生的自动重复；它不等同于最终输入的文字字数。热力图使用主要 ANSI 键位，媒体键、部分硬件功能键与特殊布局的展示存在限制。
 
@@ -98,7 +128,7 @@ shasum -a 256 -c SHA256SUMS.txt
 
 ## 数据与隐私
 
-- 统计只保存在本机：`~/Library/Application Support/Trace/statistics.json`，不上传、不遥测。
+- 统计只保存在本机：macOS 为 `~/Library/Application Support/Trace/statistics.json`，Windows 为 `%LOCALAPPDATA%\Trace\statistics.json`，不上传、不遥测。
 - 磁盘保存每天的距离、按键计数、小时汇总与可选词频；不保存原始段落、按键顺序、剪贴板内容或输入时间线。
 - 词语画像**默认关闭**。开启后，输入框基线与编辑草稿只短暂存在内存，用于识别新增文字；暂停、关闭或切换输入框时释放。
 - 跳过系统标记的密码框和安全输入模式；默认排除常见密码管理器和终端的按键 / 文字统计。自绘输入框不一定暴露完整安全标记，处理敏感内容时可暂停或排除应用。
@@ -106,6 +136,8 @@ shasum -a 256 -c SHA256SUMS.txt
 - 每 10 秒原子保存，正常退出立即保存；异常断电可能丢失最近约 10 秒的数据。
 
 ## 从源码构建
+
+### macOS
 
 需要 macOS 13+、Xcode 或 Apple Command Line Tools，以及 Swift 5.9+。不需要 Node.js / Electron。
 
@@ -129,6 +161,20 @@ dist/Trace-0.3.0-universal.pkg
 
 已有证书时，可通过 `TRACE_CODESIGN_IDENTITY` 指定应用签名身份，通过 `TRACE_INSTALLER_IDENTITY` 指定安装包签名身份。**当前脚本不自动完成公证**，正式分发还需按 Apple 文档配置 Developer ID、Hardened Runtime 和公证流程。贡献或自行分发时请使用自己的应用标识和签名身份，避免与原版权限混淆。
 
+### Windows
+
+在 Windows 安装 .NET 10 SDK；制作安装器另需 Inno Setup 6.4+。
+
+```powershell
+dotnet run --project windows/Trace.CoreChecks -c Release
+./scripts/build-windows.ps1 -Runtime win-x64
+./scripts/build-windows.ps1 -Runtime win-arm64
+# 只构建自带运行时的便携 ZIP：
+./scripts/build-windows.ps1 -Runtime win-x64 -SkipInstaller
+```
+
+Windows 构建输出到 `dist/windows/<运行架构>/`。详细步骤、独立截图工具与统计边界见 [Windows 开发说明](windows/README.md#构建)。
+
 ## 项目结构
 
 ```text
@@ -145,13 +191,18 @@ Resources/                 # 应用信息
 Installer/                 # 安装器页面与配置
 scripts/                   # 构建、检查、预览和打包脚本
 docs/                      # 中文指南和示例截图
+windows/
+├── Trace.Core/            # Windows 统计、文本草稿与本地存储（可独立检查）
+├── Trace.CoreChecks/      # 核心检查可执行程序
+├── Trace.Windows/         # WPF 界面、Win32 监听、UIA 与本地分词
+└── Installer/             # Inno Setup 安装器
 ```
 
-核心检查直接编译真实核心源码，覆盖距离换算、Retina 坐标、文本归因、输入法替换、Unicode 编辑、分词、跨日汇总、暂停、持久化和损坏文件保护。GitHub Actions 会执行检查及通用安装包构建。
+核心检查直接编译真实核心源码，覆盖距离换算、Retina 坐标、文本归因、输入法替换、Unicode 编辑、分词、跨日汇总、暂停、持久化和损坏文件保护。GitHub Actions 分别执行 macOS 与 Windows 检查及安装包构建。Windows 还执行两套主题 / 悬浮条渲染、已打包程序的原生接口检查及 x64 安装 / 卸载检查；真实硬件输入、输入法与 ARM64 运行仍需在对应设备上验证。
 
 ## 参与贡献
 
-欢迎通过 [Issue](https://github.com/aiyougit/trace-macos/issues) 报告问题或提出建议，通过 Pull Request 改进项目。请先阅读 [贡献指南](CONTRIBUTING.md)。当前只提供 macOS 版本。
+欢迎通过 [Issue](https://github.com/aiyougit/trace-macos/issues) 报告问题或提出建议，通过 Pull Request 改进项目。请先阅读 [贡献指南](CONTRIBUTING.md)。目前提供 macOS 和 Windows 两个原生版本。
 
 ## 开源许可
 

@@ -10,12 +10,16 @@
 
 ## 本地开发
 
+macOS：
+
 1. 安装 Xcode 或 Apple Command Line Tools，使用 Swift 5.9+、macOS 13+。
 2. 运行 `./scripts/test.sh`，再运行 `./scripts/build.sh`。
 3. 需要检查通用分发时运行 `./scripts/build.sh --universal`、`./scripts/package.sh`。
 4. UI 修改可运行 `./scripts/preview.sh`，截图工具使用独立临时数据，不启动监听。
 
-不要提交 `.build/`、`dist/`、本机统计、证书、密钥、账户信息或授权缓存。测试程序使用独立 Swift 可执行文件，不依赖 XCTest 运行库。
+Windows：安装 .NET 10 SDK，执行 `dotnet run --project windows/Trace.CoreChecks -c Release` 和 `./scripts/build-windows.ps1 -Runtime win-x64`；安装包构建需要 Inno Setup 6.4+。详情见 [Windows 开发指南](windows/README.md#构建)。
+
+不要提交 `bin/`、`obj/`、`.build/`、`dist/`、本机统计、证书、密钥、账户信息或授权缓存。测试程序使用独立 Swift 可执行文件，不依赖 XCTest 运行库。
 
 ## 提交改动
 

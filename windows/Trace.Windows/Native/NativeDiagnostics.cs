@@ -7,7 +7,7 @@ using Trace.Core;
 
 namespace Trace.Windows.Native;
 
-// Explicit CI diagnostics: no StatisticsStore, UI Automation values, or user-data writes.
+// Explicit CI diagnostics use isolated temporary stores; no UI Automation text or user-data files.
 internal static class NativeDiagnostics
 {
     internal static void Run(string output)
