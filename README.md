@@ -12,7 +12,7 @@
 ![Universal](https://img.shields.io/badge/架构-Apple%20Silicon%20%2B%20Intel-8A9464)
 [![MIT License](https://img.shields.io/badge/License-MIT-C4A16B)](LICENSE)
 
-[macOS 下载](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0) · [Windows 下载](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.1) · [macOS 指南](docs/使用指南.md) · [Windows 指南](windows/README.md) · [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md)
+[macOS 下载](https://github.com/aiyougit/trace/releases/tag/v0.3.0) · [Windows 下载](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.1) · [macOS 指南](docs/使用指南.md) · [Windows 指南](windows/README.md) · [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md)
 
 <img src="docs/images/overview-light.png" alt="迹 Trace 淡木主题概览面板，展示鼠标距离、键盘输入次数与小时活动" width="960">
 
@@ -73,14 +73,14 @@ macOS 使用 SwiftUI、AppKit、CoreGraphics、Accessibility 与 NaturalLanguage
 
 | 平台 | 系统要求 | 架构 | 下载 |
 | --- | --- | --- | --- |
-| macOS 0.3.0 | macOS 13+ | Apple Silicon / Intel 通用 | [PKG / APP ZIP](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0) |
-| Windows 0.1.1 | Windows 10 1809+ / Windows 11；Server 2019+ 桌面体验版（x64） | x64 / ARM64 分别下载 | [EXE 安装器 / 便携 ZIP](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.1) |
+| macOS 0.3.0 | macOS 13+ | Apple Silicon / Intel 通用 | [PKG / APP ZIP](https://github.com/aiyougit/trace/releases/tag/v0.3.0) |
+| Windows 0.1.1 | Windows 10 1809+ / Windows 11；Server 2019+ 桌面体验版（x64） | x64 / ARM64 分别下载 | [EXE 安装器 / 便携 ZIP](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.1) |
 
 ### macOS
 
 支持 **macOS 13 Ventura 及以上**，同一个通用安装包兼容 **Apple Silicon 和 Intel Mac**。
 
-1. 打开 [macOS 版本 Releases](https://github.com/aiyougit/trace-macos/releases/tag/v0.3.0)，下载 `Trace-0.3.0-universal.pkg`。
+1. 打开 [macOS 版本 Releases](https://github.com/aiyougit/trace/releases/tag/v0.3.0)，下载 `Trace-0.3.0-universal.pkg`。
 2. 退出正在运行的 Trace，双击安装包，按 macOS 安装器提示完成安装。应用固定安装到 `/Applications/Trace.app`。
 3. 从「应用程序」启动 Trace，按照下面的说明开启需要的权限。
 
@@ -142,8 +142,8 @@ shasum -a 256 -c SHA256SUMS.txt
 需要 macOS 13+、Xcode 或 Apple Command Line Tools，以及 Swift 5.9+。不需要 Node.js / Electron。
 
 ```sh
-git clone https://github.com/aiyougit/trace-macos.git
-cd trace-macos
+git clone https://github.com/aiyougit/trace.git
+cd trace
 ./scripts/test.sh               # 核心检查
 ./scripts/build.sh --universal  # 构建 Apple Silicon + Intel 通用程序
 ./scripts/package.sh            # 将现有程序封装为 PKG，不重新编译
@@ -202,7 +202,7 @@ windows/
 
 ## 参与贡献
 
-欢迎通过 [Issue](https://github.com/aiyougit/trace-macos/issues) 报告问题或提出建议，通过 Pull Request 改进项目。请先阅读 [贡献指南](CONTRIBUTING.md)。目前提供 macOS 和 Windows 两个原生版本。
+欢迎通过 [Issue](https://github.com/aiyougit/trace/issues) 报告问题或提出建议，通过 Pull Request 改进项目。请先阅读 [贡献指南](CONTRIBUTING.md)。目前提供 macOS 和 Windows 两个原生版本。
 
 ## 开源许可
 

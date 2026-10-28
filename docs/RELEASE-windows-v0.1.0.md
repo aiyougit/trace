@@ -39,4 +39,4 @@ Get-FileHash .\Trace-0.1.0-windows-x64-setup.exe -Algorithm SHA256
 - 本地中文词典按 MIT 许可随程序再分发。未知词可能拆分或被过滤；词频画像不等于完整文本记录。
 - Windows CI 已验证核心逻辑、WPF 渲染、原生监听接口初始化与清理、本地分词、应用启动 / 任务栏 / 悬浮模式切换、自带运行时打包，以及 x64 安装 / 卸载。真实鼠标键盘、中文输入法和不同应用的采样表现仍需真机体验；ARM64 已交叉构建，尚未完成 ARM64 真机运行验证。
 
-[完整中文 Windows 指南与截图](https://github.com/aiyougit/trace-macos/blob/main/windows/README.md) · [项目主页](https://github.com/aiyougit/trace-macos)
+[完整中文 Windows 指南与截图](https://github.com/aiyougit/trace/blob/main/windows/README.md) · [项目主页](https://github.com/aiyougit/trace)

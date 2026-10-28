@@ -24,7 +24,7 @@ Server 2019 请下载 **x64** 安装包。仅支持具有桌面体验的交互�
 
 ## 下载与安装
 
-从 [Windows 版本发布页](https://github.com/aiyougit/trace-macos/releases/tag/windows-v0.1.1) 下载：
+从 [Windows 版本发布页](https://github.com/aiyougit/trace/releases/tag/windows-v0.1.1) 下载：
 
 - 普通 Intel / AMD 电脑：`Trace-0.1.1-windows-x64-setup.exe`。
 - Snapdragon 等 ARM 电脑：`Trace-0.1.1-windows-arm64-setup.exe`。

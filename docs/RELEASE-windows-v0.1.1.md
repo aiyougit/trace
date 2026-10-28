@@ -26,4 +26,4 @@
 
 当前程序和安装器未进行商业代码签名。校验下载文件可使用 `Get-FileHash <文件名> -Algorithm SHA256`，与同架构的 SHA256SUMS 清单对比。请按 Windows 正常流程决定是否运行，无需关闭系统安全保护。
 
-[Windows 中文指南](https://github.com/aiyougit/trace-macos/blob/main/windows/README.md)
+[Windows 中文指南](https://github.com/aiyougit/trace/blob/main/windows/README.md)
