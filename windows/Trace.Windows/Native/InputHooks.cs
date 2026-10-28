@@ -26,7 +26,23 @@ internal sealed class InputHooks : IDisposable
     private uint threadId;
     private int queued;
     private volatile bool stopping;
-    internal volatile bool Enabled = true;
+    private bool enabled = true;
+    private int inputEpoch, seenEpoch;
+    internal bool Enabled
+    {
+        get => Volatile.Read(ref enabled);
+        set
+        {
+            if (Volatile.Read(ref enabled) == value) return;
+            Volatile.Write(ref enabled, value); Interlocked.Increment(ref inputEpoch);
+        }
+    }
+    private void SyncState()
+    {
+        var epoch = Volatile.Read(ref inputEpoch);
+        if (epoch == seenEpoch) return;
+        previous = null; keys.Reset(); held.Clear(); seenEpoch = epoch;
+    }
     internal bool Listening { get; private set; }
     internal string? Error { get; private set; }
     internal long Dropped { get; private set; }
@@ -65,6 +81,7 @@ internal sealed class InputHooks : IDisposable
     {
         try
         {
+            SyncState();
             if (code >= 0)
             {
                 var k = Marshal.PtrToStructure<Win32.KeyboardData>(data);
@@ -96,6 +113,7 @@ internal sealed class InputHooks : IDisposable
     {
         try
         {
+            SyncState();
             if (code >= 0 && message.ToInt64() == 0x200)
             {
                 var m = Marshal.PtrToStructure<Win32.MouseData>(data);

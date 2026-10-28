@@ -17,6 +17,8 @@ var unicode = new TextDraft("a👩‍💻b"); unicode.Update("a👩‍💻éb")
 Check(unicode.InsertedText.Trim() == "é" && WordAnalysis.CharacterCount("👩‍💻 é") == 2, "grapheme-safe edit and character count");
 var words = WordAnalysis.Count(["TRACE", "trace", "开发", "the", "123", "a", "hello@example.com"]);
 Check(words.Count == 2 && words["trace"] == 2 && words["开发"] == 1, "segmentation filtering and normalization");
+var localWords = LocalWordSegmenter.Count("软件开发 TRACE trace 欢迎使用软件 𠀀测试");
+Check(localWords.GetValueOrDefault("trace") == 2 && localWords.GetValueOrDefault("软件") == 2 && localWords.ContainsKey("开发"), "bundled Chinese dictionary and English segmentation without language packs");
 var root = Path.Combine(Path.GetTempPath(), "TraceChecks-" + Guid.NewGuid());
 try
 {

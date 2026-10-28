@@ -4,4 +4,5 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup><EmbeddedResource Include="../ThirdParty/Jieba/dict.txt.small" LogicalName="Trace.Core.ChineseDictionary" /></ItemGroup>
 </Project>

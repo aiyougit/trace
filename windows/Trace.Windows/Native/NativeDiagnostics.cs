@@ -16,13 +16,11 @@ internal static class NativeDiagnostics
             if (!hooks.Listening) throw new InvalidOperationException(hooks.Error ?? "Input hook initialization timed out");
             if (hooks.ScreenCount == 0) throw new InvalidOperationException("No display geometry available");
         }
-        var segmenter = new global::Windows.Data.Text.WordsSegmenter("zh-Hans");
-        var tokens = segmenter.GetTokens("软件 开发 TRACE trace").Select(x => x.Text).ToArray();
-        var words = WordAnalysis.Count(tokens);
+        var words = LocalWordSegmenter.Count("软件 开发 TRACE trace");
         if (words.GetValueOrDefault("trace") != 2 || !words.ContainsKey("软件"))
-            throw new InvalidOperationException("Windows word segmentation failed for fixed synthetic fixture. Language=" + segmenter.ResolvedLanguage + "; tokens=" + string.Join("|", tokens));
+            throw new InvalidOperationException("Bundled Chinese/English dictionary segmentation failed");
         var path = Path.GetFullPath(output);
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-        File.WriteAllText(path, "PASS — packaged native hook initialization/cleanup, monitor geometry, Windows Chinese/English segmentation. No statistics saved.");
+        File.WriteAllText(path, "PASS — packaged native hook initialization/cleanup, monitor geometry, bundled offline Chinese/English segmentation. No statistics saved.");
     }
 }

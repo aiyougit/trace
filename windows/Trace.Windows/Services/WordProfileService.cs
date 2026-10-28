@@ -55,7 +55,6 @@ internal sealed class WordProfileService : IDisposable
     }
     private void Run()
     {
-        global::Windows.Data.Text.WordsSegmenter? segmenter = null;
         while (!stop.Wait(200))
         {
             try
@@ -121,8 +120,7 @@ internal sealed class WordProfileService : IDisposable
                 {
                     draft.Update(text);
                     var typed = draft.InsertedText;
-                    segmenter ??= new global::Windows.Data.Text.WordsSegmenter("zh-Hans");
-                    var words = WordAnalysis.Count(segmenter.GetTokens(typed).Select(x => x.Text));
+                    var words = LocalWordSegmenter.Count(typed);
                     var count = WordAnalysis.CharacterCount(typed);
                     pending.Enqueue(new(day, contributed, words, count - characters, generation));
                     contributed = words; characters = count; seenKey = keyTicks;
