@@ -23,9 +23,9 @@ internal sealed class AppController : IDisposable
     internal bool Changing { get; private set; }
     internal bool Exiting { get; private set; }
     internal int DialogDepth { get; private set; }
-    internal AppController()
+    internal AppController(StatisticsStore? statistics = null)
     {
-        store = new(); ThemeManager.Apply(store.Preferences.Theme);
+        store = statistics ?? new(); ThemeManager.Apply(store.Preferences.Theme);
         monitor = new(store); model = new(store, monitor);
         dashboard = new(model, this); floating = new(model, this);
         Application.Current.MainWindow = dashboard;
